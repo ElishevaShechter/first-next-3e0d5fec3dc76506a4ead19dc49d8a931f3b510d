@@ -1,142 +1,110 @@
-.page {
-  --background: #fafafa;
-  --foreground: #fff;
-
-  --text-primary: #000;
-  --text-secondary: #666;
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
-
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
+.container {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #3b82f6, #9333ea);
+  overflow: hidden;
+  padding: 2rem;
+  direction: rtl;
 }
 
-.main {
-  display: flex;
-  flex: 1;
-  width: 100%;
-  max-width: 800px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
+/* לוגו רקע ענק */
+.backgroundLogo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 650px;
+  opacity: 0.1;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
-.intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
+
+/* אנימציית כניסה */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
+/* אזור מרכזי */
+.hero {
+  text-align: center;
+  margin-top: 120px;
+  color: white;
+  animation: fadeUp 1s ease forwards;
 }
 
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.4);
 }
 
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
+.hero p {
+  font-size: 1.4rem;
+  margin-top: 10px;
+  opacity: 0.9;
 }
 
-.ctas {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
-}
-
-.ctas a {
+/* כפתורים */
+.buttons {
+  margin-top: 40px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
+  gap: 1.5rem;
+  animation: fadeUp 1.4s ease forwards;
 }
 
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
+.btn {
+  background: white;
+  color: #3b82f6;
+  padding: 0.8rem 1.6rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
+.btn:hover {
+  transform: translateY(-5px);
+  background: #facc15;
+  color: #1e3a8a;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
+/* אלמנטים מרחפים */
+.floatingElements {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
 }
 
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
-  }
-
-  .intro {
-    gap: 16px;
-  }
-
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
-  }
+.floatingElements span {
+  position: absolute;
+  font-size: 2.5rem;
+  opacity: 0.5;
+  animation: float 6s ease-in-out infinite;
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
+/* מיקומים שונים */
+.star:nth-child(1) { top: 10%; left: 15%; animation-duration: 7s; }
+.star:nth-child(2) { top: 70%; left: 80%; animation-duration: 9s; }
+.controller { top: 40%; left: 5%; animation-duration: 8s; }
+.block { top: 20%; left: 70%; animation-duration: 10s; }
+.ball { top: 85%; left: 30%; animation-duration: 6s; }
 
-  .page {
-    --background: #000;
-    --foreground: #000;
-
-    --text-primary: #ededed;
-    --text-secondary: #999;
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
-  }
+/* אנימציית ריחוף */
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-25px) rotate(8deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
 }
+
+
