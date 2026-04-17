@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 
-
 import Image from "next/image";
 import styles from "./Navbar.module.css";
 
@@ -23,9 +22,9 @@ export default function Navbar() {
             </div>
 
             <nav className={styles.links}>
-                <Link href="/">בית</Link>
-                <Link href="/games">משחקים</Link>
-                <Link href="/cart">עגלה</Link>
+                <Link href="/"><i class="fa-solid fa-house"></i></Link>
+                <Link href="/games"><i class="fa-solid fa-dice"></i></Link>
+                <Link href="/cart"><i class="fa-solid fa-shopping-cart"></i></Link>
                 <Link href="/contact" className={styles.cta}>
                     צרו קשר
                 </Link>
