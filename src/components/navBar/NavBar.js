@@ -13,7 +13,7 @@ export default function Navbar() {
             <div className={styles.logo}>
                 <Link href="/">
                     <Image
-                        src="/Copilot_20260417_102723.png"
+                        src="/logo-toys.png"
                         alt="TOYS Logo"
                         width={120}
                         height={60}
