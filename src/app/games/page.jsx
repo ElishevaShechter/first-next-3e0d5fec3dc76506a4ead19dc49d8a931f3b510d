@@ -1,7 +1,10 @@
+"use client";
+import React from "react";
+import { useCartStore } from "@/store/cartStore.js";
 import games from "./data";
 import Image from "next/image";
 import styles from "./games.module.css";
-
+import Link from "next/link";
 export default function GamesPage() {
     
 
@@ -19,14 +22,17 @@ export default function GamesPage() {
 
             <div className={styles.grid}>
                 {games.map((game) => (
-                    <a key={game.id} href={`/games/${game.id}`} className={styles.card}>    
-                        <img src={game.image} alt={game.name} className={styles.image} />
+                    <div key={game.id} className={styles.card}>
+                        <Link href={`/games/${game.id}`}>    
+                            <img src={game.image} alt={game.name} className={styles.image} />
 
-                        <h3 className={styles.name}>{game.name}</h3>
-                        <p className={styles.price}>₪{game.price}</p>
-
-                        <button className={styles.button}>הוסף לעגלה</button>
-                    </a>
+                            <h3 className={styles.name}>{game.name}</h3>
+                            <p className={styles.price}>₪{game.price}</p>
+                        </Link>
+                        <button className={styles.button} onClick={()=> useCartStore.getState().addItem(game)}>
+                            הוסף לעגלה
+                        </button>
+                    </div>
                 ))}
             </div>
         </main>

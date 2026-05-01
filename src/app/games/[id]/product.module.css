@@ -19,7 +19,7 @@
 
 .price {
     font-size: 1.5rem;
-    color: #ff4081;
+    color: #5420ff;
     font-weight: bold;
 }
 
@@ -50,4 +50,18 @@
     height: 120px;
     object-fit: cover;
     border-radius: 8px;
+}
+.button {
+    background: white;
+    color: #3b82f6;
+    border: 2px solid #3b82f6;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s ease;
+}
+.button:hover {
+    background: #3b82f6;
+    color: white;
 }
