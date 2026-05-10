@@ -1,11 +1,10 @@
 "use client";
 import Link from 'next/link';
 import { useState } from 'react';
-
-
 import Image from "next/image";
 import styles from "./Navbar.module.css";
-
+import CartIcon from '../cartItem/CartIcon';
+import { useCartStore } from "@/store/cartStore";
 export default function Navbar() {
     return (
         <header className={styles.navbar}>
@@ -23,8 +22,10 @@ export default function Navbar() {
 
             <nav className={styles.links}>
                 <Link href="/"><i className="fa-solid fa-house"></i></Link>
-                <Link href="/games"><i className="fa-solid fa-dice"></i></Link>
-                <Link href="/cart"><i className="fa-solid fa-shopping-cart"></i></Link>
+                <Link href="/games"><i className="fa-solid fa-dice"></i>
+
+                </Link>
+                <CartIcon />
                 <Link href="/contact" className={styles.cta}>
                     צרו קשר
                 </Link>

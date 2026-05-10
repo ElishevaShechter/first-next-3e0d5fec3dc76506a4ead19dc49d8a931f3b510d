@@ -1,0 +1,21 @@
+.cartIconContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.cartIconBadge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #3b82f6;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
