@@ -25,6 +25,7 @@ export default function Navbar() {
                 <Link href="/games"><i className="fa-solid fa-dice"></i>
 
                 </Link>
+                <Link href="/mongo">DB</Link>
                 <CartIcon />
                 <Link href="/contact" className={styles.cta}>
                     צרו קשר
