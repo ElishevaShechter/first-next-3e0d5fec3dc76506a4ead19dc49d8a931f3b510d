@@ -20,9 +20,31 @@ export default function MongoAdminPage() {
     }, []);
 
     async function loadGames() {
-        const response = await fetch("/api/games", { cache: "no-store" });
-        const data = await response.json();
-        setGames(data);
+        try {
+            const response = await fetch("/api/games", { cache: "no-store" });
+            if (!response.ok) {
+                let errorMessage = `HTTP error! status: ${response.status}`;
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.details || errorData.error || errorMessage;
+                } catch (e) {
+                    // Response body is not JSON, use status message
+                }
+                throw new Error(errorMessage);
+            }
+            const data = await response.json();
+            setGames(data);
+        } catch (error) {
+            console.error("Failed to load games:", error);
+            // Fallback to local data when MongoDB is not available
+            try {
+                const localGames = await import("../games/data.js");
+                setGames(localGames.default.map(game => ({ ...game, _id: game.id })));
+                setStatus("Using local data - MongoDB connection failed. Configure MongoDB Atlas to enable database operations.");
+            } catch (localError) {
+                setStatus(`Failed to load games: ${error.message}`);
+            }
+        }
     }
 
     function handleChange(event) {
@@ -44,35 +66,59 @@ export default function MongoAdminPage() {
         }
 
         if (editingId) {
-            const response = await fetch(`/api/games/${editingId}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            });
+            try {
+                const response = await fetch(`/api/games/${editingId}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload),
+                });
 
-            if (response.ok) {
-                const updated = await response.json();
-                setGames((current) => current.map((item) => (item._id === editingId ? updated : item)));
-                setStatus("Game updated successfully.");
-                setEditingId(null);
-                setForm(initialForm);
-            } else {
-                setStatus("Unable to update game.");
+                if (response.ok) {
+                    const updated = await response.json();
+                    setGames((current) => current.map((item) => (item._id === editingId ? updated : item)));
+                    setStatus("Game updated successfully.");
+                    setEditingId(null);
+                    setForm(initialForm);
+                } else {
+                    let errorMessage = "Unable to update game.";
+                    try {
+                        const errorData = await response.json();
+                        errorMessage = errorData.details || errorData.error || errorMessage;
+                    } catch (e) {
+                        // Response body is not JSON
+                    }
+                    setStatus(`Unable to update game: ${errorMessage}. Configure MongoDB Atlas to enable database operations.`);
+                }
+            } catch (error) {
+                console.error("Failed to update game:", error);
+                setStatus(`Failed to update game: ${error.message}`);
             }
         } else {
-            const response = await fetch("/api/games", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            });
+            try {
+                const response = await fetch("/api/games", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload),
+                });
 
-            if (response.ok) {
-                const created = await response.json();
-                setGames((current) => [created, ...current]);
-                setStatus("Game created successfully.");
-                setForm(initialForm);
-            } else {
-                setStatus("Unable to create game.");
+                if (response.ok) {
+                    const created = await response.json();
+                    setGames((current) => [created, ...current]);
+                    setStatus("Game created successfully.");
+                    setForm(initialForm);
+                } else {
+                    let errorMessage = "Unable to create game.";
+                    try {
+                        const errorData = await response.json();
+                        errorMessage = errorData.details || errorData.error || errorMessage;
+                    } catch (e) {
+                        // Response body is not JSON
+                    }
+                    setStatus(`Unable to create game: ${errorMessage}. Configure MongoDB Atlas to enable database operations.`);
+                }
+            } catch (error) {
+                console.error("Failed to create game:", error);
+                setStatus(`Failed to create game: ${error.message}`);
             }
         }
     }
@@ -88,16 +134,28 @@ export default function MongoAdminPage() {
             return;
         }
 
-        const response = await fetch(`/api/games/${id}`, { method: "DELETE" });
-        if (response.ok) {
-            setGames((current) => current.filter((game) => game._id !== id));
-            setStatus("Game deleted successfully.");
-            if (editingId === id) {
-                setEditingId(null);
-                setForm(initialForm);
+        try {
+            const response = await fetch(`/api/games/${id}`, { method: "DELETE" });
+            if (response.ok) {
+                setGames((current) => current.filter((game) => game._id !== id));
+                setStatus("Game deleted successfully.");
+                if (editingId === id) {
+                    setEditingId(null);
+                    setForm(initialForm);
+                }
+            } else {
+                let errorMessage = "Unable to delete game.";
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.details || errorData.error || errorMessage;
+                } catch (e) {
+                    // Response body is not JSON
+                }
+                setStatus(`Unable to delete game: ${errorMessage}. Configure MongoDB Atlas to enable database operations.`);
             }
-        } else {
-            setStatus("Unable to delete game.");
+        } catch (error) {
+            console.error("Failed to delete game:", error);
+            setStatus(`Failed to delete game: ${error.message}`);
         }
     }
 
@@ -113,6 +171,10 @@ export default function MongoAdminPage() {
                 <div>
                     <h1>MongoDB Games CRUD</h1>
                     <p>Manage the <strong>main.games</strong> collection from Atlas.</p>
+                    <p className={styles.note}>
+                        <strong>Note:</strong> If you see "Using local data" below, MongoDB Atlas is not configured.
+                        Add your IP address to MongoDB Atlas Network Access to enable database operations.
+                    </p>
                 </div>
                 <div className={styles.status}>{status}</div>
             </section>

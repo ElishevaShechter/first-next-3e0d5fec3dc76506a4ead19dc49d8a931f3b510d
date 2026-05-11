@@ -23,6 +23,16 @@
     color: #475569;
 }
 
+.note {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 12px 0 0;
+    color: #92400e;
+    font-size: 0.9rem;
+}
+
 .status {
     min-width: 170px;
     color: #0f172a;

@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useCartStore } from "../store/cartStore";
+import { useCartStore } from "../../store/cartStore";
 
 export default function AddToCartButton({ product }) {
   const router = useRouter();

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function CartIcon() {
     const items = useCartStore((state) => state.items);
-    const totalItems = items.reduce((sum, item) => sum + item.qty, 0);
+    const totalItems = items.length;
 
     return (
         <Link href="/cart" className={styles.cartIconContainer}>

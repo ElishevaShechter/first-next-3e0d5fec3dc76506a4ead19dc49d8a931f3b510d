@@ -9,6 +9,7 @@ import styles from "./games.module.css";
 import Link from "next/link";
 export default function GamesPage() {
     const router = useRouter();
+    const addItem = useCartStore((state) => state.addItem);
 
     return (
         <main className={styles.container}>
@@ -34,7 +35,7 @@ export default function GamesPage() {
                         <button
                             className={styles.button}
                             onClick={() => {
-                                useCartStore.getState().addItem(game);
+                                addItem(game);
                                 toast.success(
                                     (t) => (
                                         <div>

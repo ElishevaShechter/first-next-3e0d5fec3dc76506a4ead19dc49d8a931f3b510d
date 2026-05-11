@@ -1,5 +1,6 @@
 "use client";
 import React, { use } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import games from "../data.js";
@@ -9,7 +10,8 @@ import { useCartStore } from "@/store/cartStore.js";
 export default function ProductPage({ params }) {
     const router = useRouter();
     const { id } = use(params);
-    const game = games.find((g) => g.id === parseInt(id));
+    const game = games.find((g) => g.id === parseInt(id, 10));
+    const addItem = useCartStore((state) => state.addItem);
 
     if (!game) {
         return <div>המוצר לא נמצא</div>;
@@ -25,7 +27,7 @@ export default function ProductPage({ params }) {
                 <button
                     className={styles.button}
                     onClick={() => {
-                        useCartStore.getState().addItem(game);
+                        addItem(game);
                         toast.success(
                             (t) => (
                                 <div>
@@ -54,11 +56,11 @@ export default function ProductPage({ params }) {
 
             <div className={styles.grid}>
                 {moreGames.map((item) => (
-                    <a key={item.id} href={`/games/${item.id}`} className={styles.card}>
+                    <Link key={item.id} href={`/games/${item.id}`} className={styles.card}>
                         <img src={item.image} className={styles.smallImage} />
                         <h3>{item.name}</h3>
                         <p>₪{item.price}</p>
-                    </a>
+                    </Link>
                 ))}
             </div>
         </main>

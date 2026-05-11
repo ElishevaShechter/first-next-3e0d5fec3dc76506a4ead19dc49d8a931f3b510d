@@ -1,10 +1,7 @@
 import { MongoClient } from "mongodb";
 
 const uri = process.env.mongo_uri;
-const options = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-};
+const options = {};
 
 if (!uri) {
     throw new Error("Please define the mongo_uri environment variable inside .env.local");

@@ -1,5 +1,5 @@
 
-import { useCartStore } from "../store/cartStore";
+import { useCartStore } from "../../store/cartStore";
 
 export default function Cart() {
   const items = useCartStore((state) => state.items);
