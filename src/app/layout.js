@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/navBar/NavBar";
-import ToasterProvider from "@/components/cartItem/ToasterProvider";
+import ToasterProvider from "@/components/navBar/toaster-provider";
 
 
 
