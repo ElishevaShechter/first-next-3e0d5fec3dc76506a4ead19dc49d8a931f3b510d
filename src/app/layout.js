@@ -1,7 +1,10 @@
-import { Geist, Geist_Mono } from "next/font/google";
+
+
+import {Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/navBar/NavBar";
 import ToasterProvider from "@/components/navBar/toaster-provider";
+import Providers from "./providers";
 
 
 
@@ -37,8 +40,11 @@ export default function RootLayout({ children }) {
       <body>
         <NavBar />
         <ToasterProvider />
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );
 }
+
