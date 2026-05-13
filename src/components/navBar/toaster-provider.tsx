@@ -1,8 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Toaster } from "react-hot-toast";
 
 export default function ToasterProvider() {
-    return <Toaster position="top-center" />;
+    const [toaster] = useState(() => <Toaster position="top-center" />);
+
+    return toaster;
 }
