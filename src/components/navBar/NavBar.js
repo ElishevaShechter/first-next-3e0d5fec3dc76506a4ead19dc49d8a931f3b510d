@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import Image from "next/image";
-import styles from "./navbar.module.css";
+import styles from "./Navbar.module.css";
 import CartIcon from '../cartItem/CartIcon';
 import { useCartStore } from "@/store/cartStore";
 export default function Navbar() {
